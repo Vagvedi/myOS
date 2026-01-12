@@ -1,69 +1,153 @@
-# myOS - Minimal x86-32 Educational Operating System
+# 🖥️ myOS - Minimal x86-32 Educational Operating System
 
-A minimal but real x86 32-bit operating system built for educational purposes.
+A minimal but fully functional x86 32-bit operating system built from scratch for educational purposes. This project demonstrates core OS concepts including bootloading, kernel initialization, and low-level hardware interaction.
 
-## Architecture
+---
 
-- **CPU**: x86 (IA-32, 32-bit)
-- **Bootloader**: GRUB (Multiboot v1 specification)
-- **Language**: Freestanding C + x86 Assembly
-- **Target**: QEMU emulator
+## 📋 Quick Start
 
-## Building
+```bash
+# Build the kernel
+make
 
-### Prerequisites
+# Run in QEMU
+make run
 
-- GCC with 32-bit support: `gcc-multilib` (Linux) or `mingw-w64` (Windows)
-- NASM assembler
-- LD (linker)
-- QEMU: `qemu-system-i386`
-- GRUB tools (for ISO creation): `grub-pc-bin` or `grub2`
+# Create and boot from ISO
+make iso
+qemu-system-i386 -cdrom myOS.iso
+```
 
-### Build
+---
+
+## 🏗️ Architecture Overview
+
+| Component | Details |
+|-----------|---------|
+| **CPU** | x86 (IA-32, 32-bit) |
+| **Bootloader** | GRUB (Multiboot v1 specification) |
+| **Languages** | Freestanding C + x86 Assembly |
+| **Execution Environment** | QEMU emulator |
+| **Memory Model** | Protected mode, flat memory model |
+
+---
+
+## 📦 Prerequisites
+
+Ensure you have the following tools installed:
+
+- **GCC with 32-bit support**
+  - Linux: `gcc-multilib`
+  - Windows: `mingw-w64`
+- **NASM assembler** - for assembly compilation
+- **LD linker** - comes with binutils
+- **QEMU** - `qemu-system-i386` for emulation
+- **GRUB tools** - `grub-pc-bin` or `grub2` (for ISO creation)
+
+### Installation (Ubuntu/Debian)
+
+```bash
+sudo apt update
+sudo apt install build-essential gcc-multilib nasm qemu-system-x86 grub-pc-bin xorriso
+```
+
+---
+
+## 🔨 Building & Running
+
+### Build the Kernel
 
 ```bash
 make
 ```
 
-This creates `kernel.bin`.
+This compiles the assembly and C code, links them with the linker script, and produces `kernel.bin`.
 
-### Run in QEMU
+### Run in QEMU (Simplest Method)
 
 ```bash
 make run
 ```
 
-Or directly:
+Or manually:
+
 ```bash
 qemu-system-i386 -kernel kernel.bin
 ```
 
-### Create ISO (optional)
+### Create Bootable ISO
 
 ```bash
 make iso
 qemu-system-i386 -cdrom myOS.iso
 ```
 
-## Current Status
+### Clean Build Artifacts
 
-**Step 1**: Minimal Multiboot-compliant kernel with VGA text output
+```bash
+make clean
+```
 
-## Files
+---
 
-- `boot.s`: Multiboot header and kernel entry point (assembly)
-- `kernel.c`: Main kernel code with VGA text output
-- `linker.ld`: Linker script (ensures Multiboot header at start)
-- `Makefile`: Build configuration
-- `grub.cfg`: GRUB configuration (for ISO)
+## 📁 Project Structure
 
-## Next Steps
+| File | Purpose |
+|------|---------|
+| `boot.s` | Multiboot header and kernel entry point (x86 assembly) |
+| `kernel.c` | Main kernel implementation with VGA text output |
+| `linker.ld` | Linker script ensuring proper memory layout |
+| `Makefile` | Build automation and targets |
+| `grub.cfg` | GRUB bootloader configuration |
 
-1. GDT (Global Descriptor Table)
-2. IDT (Interrupt Descriptor Table)
-3. IRQ handling
-4. Timer interrupt
-5. Task scheduler
-6. Paging
-7. System calls
-8. Basic shell
+---
+
+## 🚀 Current Implementation
+
+### ✅ Completed Features
+
+- **Multiboot Compliance**: GRUB-compatible bootable kernel
+- **Protected Mode**: CPU running in 32-bit protected mode
+- **VGA Text Output**: Direct video memory manipulation for printing
+- **Basic Kernel Loop**: Infinite loop after initialization
+
+### 📊 Development Roadmap
+
+The project follows a structured progression toward a feature-complete OS:
+
+1. ⬜ **GDT** (Global Descriptor Table) - Memory segmentation
+2. ⬜ **IDT** (Interrupt Descriptor Table) - Exception handling
+3. ⬜ **IRQ Handling** - Hardware interrupt processing
+4. ⬜ **Timer Interrupt** - Preemptive multitasking foundation
+5. ⬜ **Task Scheduler** - Context switching and process management
+6. ⬜ **Paging** - Virtual memory management
+7. ⬜ **System Calls** - User-mode kernel interface
+8. ⬜ **Basic Shell** - Command-line interface
+
+---
+
+## 💡 Educational Value
+
+This project is ideal for learning:
+
+- **Low-level OS design** - Direct hardware interaction
+- **x86 assembly** - CPU instruction set and calling conventions
+- **Memory management** - Segmentation, paging, and virtual memory
+- **Bootloading** - How operating systems start up
+- **Interrupt handling** - Exception and signal processing
+- **Multiprocessing** - Task scheduling and context switching
+
+---
+
+## 🔗 Resources
+
+- [OSDev Wiki](https://wiki.osdev.org/) - Comprehensive OS development reference
+- [Intel x86 Manuals](https://www.intel.com/content/www/us/en/develop/articles/intel-sdm.html)
+- [Multiboot Specification](https://www.gnu.org/software/grub/manual/multiboot/multiboot.html)
+- [QEMU Documentation](https://www.qemu.org/documentation/)
+
+---
+
+## 📝 License
+
+Educational project - free to use and modify for learning purposes.

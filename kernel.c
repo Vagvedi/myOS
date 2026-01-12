@@ -149,6 +149,6 @@ void kernel_main(unsigned int magic, struct multiboot_info *mb_info) {
     /* Infinite loop - kernel should never return */
     while (1) {
         __asm__ volatile ("hlt");
-  /* Halt CPU until interrupt */
+    /* Halt CPU until interrupt */
     }
 }
